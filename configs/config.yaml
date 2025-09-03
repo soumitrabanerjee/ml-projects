@@ -1,0 +1,4 @@
+train_output_dir: 'data/train_dir.csv'
+train_desired_name: 'data/train.csv'
+test_output_dir: 'data/test_dir.csv'
+test_desired_name: 'data/test.csv'
