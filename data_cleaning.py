@@ -24,7 +24,7 @@ def load_config(config_path):
         config = yaml.safe_load(file)
     return config
 
-if __name__ == '__main__':
+def data_cleaning_process():
     spark = SparkSession.builder.appName('data_cleaning').getOrCreate()
     configs = load_config('configs/config.yaml')
 
@@ -48,11 +48,11 @@ if __name__ == '__main__':
 
     get_strong_corr.show(1, False)
 
-    cleaned_data = selected_columns_df.na.drop()
+    clean_data = selected_columns_df.na.drop()
     print('Total Records after dropping nulls: ' + str(selected_columns_df.na.drop().count()))
 
     # split the data into training and test sets
-    train = cleaned_data.filter("year < 2012")
+    train = clean_data.filter("year < 2012")
     print('Total Records in training set: ' + str(train.count()))
     # save the results to a CSV file
     train_dir = configs['train_output_dir']
@@ -61,13 +61,15 @@ if __name__ == '__main__':
     rename_part_file(train_dir, train_desired_name)
 
     # split the data into training and test sets
-    test = cleaned_data.filter("year >= 2012")
+    test = clean_data.filter("year >= 2012")
     print('Total Records in test set: ' + str(test.count()))
     # save the results to a CSV file
     test_dir = configs['test_output_dir']
     write_to_csv(test, test_dir)
     test_desired_name = configs['test_desired_name']
     rename_part_file(test_dir, test_desired_name)
+
+    return train, test, selected_columns_df
 
 
 
