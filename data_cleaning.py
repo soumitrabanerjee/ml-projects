@@ -24,7 +24,7 @@ def load_config(config_path):
         config = yaml.safe_load(file)
     return config
 
-def data_cleaning_process():
+def get_clean_data():
     spark = SparkSession.builder.appName('data_cleaning').getOrCreate()
     configs = load_config('configs/config.yaml')
 

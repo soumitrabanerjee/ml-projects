@@ -1,21 +1,16 @@
-# This is a sample Python script.
+from data_cleaning import get_clean_data
+from data_analysis import data_analysis
+from ml_process import ml_process
 
-# Press ⌃F5 to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-from data_cleaning import data_cleaning_process
-from analyse_data import analyse_data
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press F9 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    train_data, test_data, required_columns_df = data_cleaning_process()
-    print(train_data)
-    print(test_data)
-    required_columns_pandas_df = required_columns_df.toPandas()
-    analyse_data(required_columns_pandas_df)
+    train_spark_data, test_spark_data, required_columns_spark_df = get_clean_data()
+    train_pandas_df = train_spark_data.toPandas()
+    test_pandas_df = test_spark_data.toPandas()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    print(train_pandas_df)
+    print(test_pandas_df)
+
+    required_columns_pandas_df = required_columns_spark_df.toPandas()
+    # data_analysis(required_columns_pandas_df)
+    ml_process(train_pandas_df, test_pandas_df)
+
