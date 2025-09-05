@@ -24,14 +24,14 @@ def load_config(config_path):
         config = yaml.safe_load(file)
     return config
 
-def get_clean_data():
+def get_clean_data(data_path, config_path):
     spark = SparkSession.builder.appName('data_cleaning').getOrCreate()
-    configs = load_config('configs/config.yaml')
+    configs = load_config(config_path)
 
     input_data = spark.read.format('csv'). \
         option('header', 'true'). \
         option('inferSchema', 'true'). \
-        load('data/teams.csv')
+        load(data_path)
 
     # select relevant columns for analysis
     selected_columns_df = input_data. \
@@ -63,6 +63,11 @@ def get_clean_data():
     # split the data into training and test sets
     test = clean_data.filter("year >= 2012")
     print('Total Records in test set: ' + str(test.count()))
+
+    train_data_percentage = round(train.count() / clean_data.count(), 2) * 100
+    test_data_percentage = round(test.count() / clean_data.count(), 2) * 100
+
+    print(f'Train vs Test Data Split Percentage: {train_data_percentage}% : {test_data_percentage}%')
     # save the results to a CSV file
     test_dir = configs['test_output_dir']
     write_to_csv(test, test_dir)
