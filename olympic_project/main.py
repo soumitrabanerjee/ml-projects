@@ -3,7 +3,7 @@ from data_analysis import data_analysis
 from ml_process import ml_process
 
 if __name__ == '__main__':
-    data_path = 'data/teams.csv'
+    data_path = 'olympic_project/data/teams.csv'
     config_path = 'configs/config.yaml'
 
     train_spark_data, test_spark_data, required_columns_spark_df = get_clean_data(data_path, config_path)

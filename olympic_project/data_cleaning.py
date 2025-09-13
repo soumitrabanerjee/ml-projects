@@ -55,9 +55,9 @@ def get_clean_data(data_path, config_path):
     train = clean_data.filter("year < 2012")
     print('Total Records in training set: ' + str(train.count()))
     # save the results to a CSV file
-    train_dir = configs['train_output_dir']
+    train_dir = configs['olympic_train_output_dir']
     write_to_csv(train, train_dir)
-    train_desired_name = configs['train_desired_name']
+    train_desired_name = configs['olympic_train_desired_name']
     rename_part_file(train_dir, train_desired_name)
 
     # split the data into training and test sets
@@ -69,9 +69,9 @@ def get_clean_data(data_path, config_path):
 
     print(f'Train vs Test Data Split Percentage: {train_data_percentage}% : {test_data_percentage}%')
     # save the results to a CSV file
-    test_dir = configs['test_output_dir']
+    test_dir = configs['olympic_test_output_dir']
     write_to_csv(test, test_dir)
-    test_desired_name = configs['test_desired_name']
+    test_desired_name = configs['olympic_test_desired_name']
     rename_part_file(test_dir, test_desired_name)
 
     return train, test, selected_columns_df
