@@ -37,7 +37,8 @@ def plot_cluster(data, labels, centroids, iteration):
     plt.scatter(x=centroids2d[:, 0], y=centroids2d[:, 1])
     plt.show()
 
-def ml_process(data):
+def ml_process(dataset):
+    data = dataset[['overall', 'potential', 'wage_eur', 'value_eur', 'age']]
     data = (data - data.min()) / (data.max() - data.min()) * 9 + 1
     print("Scaled Data Description:")
     description = data.describe()
@@ -62,3 +63,7 @@ def ml_process(data):
         plot_cluster(data, labels, centroids, iteration)
         iteration += 1
 
+    print("Centroids for insights:\n", centroids)
+    features = ['overall', 'potential', 'wage_eur', 'value_eur', 'age']
+    insights = dataset[labels == 0][["short_name"] + features]
+    print("Insights:\n", insights)

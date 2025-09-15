@@ -9,7 +9,7 @@ def get_clean_data(data_path):
         load(data_path)
 
     # select relevant columns for analysis
-    selected_columns = input_data.select('overall', 'potential', 'wage_eur', 'value_eur', 'age')
+    selected_columns = input_data.select('short_name', 'overall', 'potential', 'wage_eur', 'value_eur', 'age')
 
     clean_data = selected_columns.na.drop()
 
